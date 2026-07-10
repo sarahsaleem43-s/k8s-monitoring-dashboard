@@ -14,31 +14,7 @@ This project sets up a local Kubernetes cluster and deploys a production-style m
 - Debugging common Kubernetes networking and pod startup issues
 
 ## Architecture
-GitHub Codespaces (Cloud Dev Environment)
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                   │
-│                    Kind Kubernetes Cluster                       │
-│                                                                   │
-│   ┌────────────────────┐        ┌─────────────────────────────┐ │
-│   │  default namespace  │        │      monitoring namespace    │ │
-│   │                      │        │                               │ │
-│   │   demo-app           │        │   Prometheus  ◄── scrapes ──┐ │ │
-│   │   (nginx, 3 pods)     │───────┼──►  metrics from all pods    │ │ │
-│   │                      │        │        │                     │ │
-│   │                      │        │        ▼                     │ │
-│   │                      │        │   Grafana (reads Prometheus) │ │
-│   │                      │        │        │                     │ │
-│   │                      │        │   Alertmanager                │ │
-│   │                      │        │   kube-state-metrics           │ │
-│   └────────────────────┘        └─────────────────────────────┘ │
-│                                                                   │
-└──────────────────────────────┬────────────────────────────────────┘
-│
-kubectl port-forward (localhost:3000)
-│
-▼
-Browser → Grafana Web UI
-**Data flow:** kube-state-metrics and node exporters collect state/resource data → Prometheus scrapes and stores it as time-series data → Grafana queries Prometheus and renders it as dashboards → port-forward tunnels the Grafana UI from inside the cluster out to the browser.
+
 
 ## Tech Stack
 
